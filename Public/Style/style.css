@@ -1,0 +1,65 @@
+body {
+  background-color: #f7f7f7;
+}
+
+h2 {
+  padding: 10px;
+  text-align: center;
+  font-family: 'Montserra';
+}
+
+h3 {
+  font-family: 'ubuntu';
+}
+p,
+li {
+  font-family: 'Ubuntu';
+}
+.navbar {
+  padding: 1rem 4.5rem 1rem;
+  background-color: #fd8a8a;
+  font-family: Ubuntu;
+}
+.nav-item {
+  padding: 0 18px;
+}
+.nav-link {
+  font-family: 'Montserrat-light';
+  font-size: large;
+}
+
+#gambar-utama {
+  margin: 2.5rem auto;
+
+  width: 50%;
+}
+
+#visi-misi {
+  background-color: #f1f7b5;
+  padding: 1rem 4.5rem 1rem;
+}
+.visi-misi {
+  margin: 5% 10%;
+}
+
+#sejarahJS {
+  width: 70%;
+  margin: 5% 10%;
+}
+
+#AnotherContent {
+  width: 70%;
+  margin: 5% 10%;
+}
+
+#info-ibadah {
+  margin: 5% 10%;
+}
+
+.footer {
+  padding: 20px;
+  color: white;
+  background-color: #9ea1d4;
+  text-align: center;
+  font-weight: bold;
+}

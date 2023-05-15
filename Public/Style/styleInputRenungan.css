@@ -1,0 +1,27 @@
+.InputRenungan {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* #JudulRenungan {
+  margin-right: 50%;
+} */
+
+label {
+  width: 15%;
+  padding: 12px 50px 12px 0;
+  display: inline-block;
+}
+
+#IsiRenungan {
+  width: 50%;
+}
+
+.UploadRenungan {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 50%;
+}

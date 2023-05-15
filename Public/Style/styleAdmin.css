@@ -1,0 +1,12 @@
+.navbar {
+  padding: 1rem 4.5rem 1rem;
+  background-color: #000000;
+  font-family: Ubuntu;
+}
+.nav-item {
+  padding: 0 18px;
+}
+.nav-link {
+  font-family: 'Montserrat-light';
+  font-size: large;
+}
