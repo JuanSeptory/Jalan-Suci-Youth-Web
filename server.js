@@ -18,9 +18,6 @@ app.use(BodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', 'src/script/Admin/');
 
-// app.set('view engine', 'ejs');
-// app.set('UserView', 'src/script/View/');
-
 app.use('/img', express.static(__dirname + '/public/img'));
 app.use('/style', express.static(__dirname + '/public/style'));
 
@@ -83,6 +80,21 @@ db.connect((err) => {
     });
   });
 
+  // GET UPDATE DATA PEMUDA
+  app.get('/UpdateDataPemuda/:id_pemuda', (req, res) => {
+    res.render('UpdateDataPemuda', { id_pemuda: req.params.id_pemuda });
+  });
+
+  // GET UPDATE DATA IBADAH
+  app.get('/UpdateDataIbadah/:id_ibadah', (req, res) => {
+    res.render('UpdateDataIbadah', { id_ibadah: req.params.id_ibadah });
+  });
+
+  //  GET UPDATE ARTIKEL RENUNGAN
+  app.get('/EditArtikelRenungan/:id_renungan', (req, res) => {
+    res.render('EditArtikelRenungan', { id_renungan: req.params.id_renungan });
+  });
+
   // GET DATA RENUNGAN
   app.get('/DataRenungan', (req, res) => {
     const sql = 'SELECT * FROM renungan';
@@ -95,6 +107,17 @@ db.connect((err) => {
   // GET INPUT RENUNGAN
   app.get('/inputRenungan', (req, res) => {
     res.render('inputRenungan');
+  });
+
+  // GET BY ID ARTIKEL RENUNGAN
+  app.get('/ArtikelRenungan/:id_renungan', (req, res) => {
+    const id_renungan = req.params.id_renungan;
+    const Artikel = `SELECT * FROM renungan WHERE id_renungan = ${id_renungan}`;
+    db.query(Artikel, (err, result) => {
+      const getArtikel = JSON.parse(JSON.stringify(result));
+      // console.log(getArtikel);
+      res.render('ArtikelRenungan', { getArtikel: getArtikel });
+    });
   });
 
   // GET INPUT INFORMASI IBADAH
@@ -125,10 +148,74 @@ db.connect((err) => {
 
   // POST INPUT DATA PEMUDA
   app.post('/InputDataPemuda', (req, res) => {
-    const Insert = `INSERT INTO pemuda (id_pemuda, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat) VALUES ('', '${req.body.NamaLengkap}', '${req.body.TempatLahir}', '${req.body.TanggalLahir}', '${req.body.JenisKelamin}', '${req.body.Alamat}')`;
+    const Insert = `INSERT INTO pemuda (id_pemuda, nama_lengkap, tempat_lahir, tanggal_lahir, JenisKelamin, alamat) VALUES ('', '${req.body.NamaLengkap}', '${req.body.TempatLahir}', '${req.body.TanggalLahir}', '${req.body.JenisKelamin}', '${req.body.Alamat}')`;
     db.query(Insert);
     if (err) throw err;
     res.redirect('/DataPemuda');
+  });
+
+  // PUT DATA PEMUDA
+  app.post('/UpdateDataPemuda/:id_pemuda', (req, res) => {
+    const id_pemuda = req.params.id_pemuda;
+    // const newData = req.body;
+    const Put = `UPDATE pemuda SET nama_lengkap = '${req.body.NamaLengkap}', tempat_lahir = '${req.body.TempatLahir}', tanggal_lahir = '${req.body.TanggalLahir}', jenis_kelamin = '${req.body.JenisKelamin}', alamat = '${req.body.Alamat}' WHERE id_pemuda = ${id_pemuda}`;
+    db.query(Put, function (err, result) {
+      if (err) throw err;
+      // console.log(req.body.id_pemuda_params);
+      // console.log(req.query);
+      // console.log(err);
+      res.redirect('/DataPemuda');
+    });
+  });
+
+  // PUT DATA IBADAH
+  app.post('/UpdateDataIbadah/:id_ibadah', (req, res) => {
+    const id_ibadah = req.params.id_ibadah;
+    const update = `UPDATE infoibadah SET jenis_ibadah = '${req.body.JudulIbadah}', tanggal_ibadah = '${req.body.TanggalIbadah}', lokasi = '${req.body.Lokasi}' WHERE id_ibadah = '${id_ibadah}'`;
+    db.query(update, function (err, result) {
+      if (err) throw err;
+      res.redirect('/DataInfoIbadah');
+    });
+  });
+});
+
+// PUT EDIT ARTIKEL RENUNGAN
+app.post('/EditArtikelRenungan/:id_renungan', (req, res) => {
+  const id_renungan = req.params.id_renungan;
+  const update = `UPDATE renungan SET judul_renungan = '${req.body.JudulRenungan}', isi_renungan = '${req.body.IsiRenungan}' WHERE id_renungan = '${id_renungan}'`;
+  db.query(update, function (err, result) {
+    if (err) throw err;
+    res.redirect('/DataRenungan');
+  });
+});
+
+// DELETE DATA PEMUDA
+app.get('/HapusDataPemuda/:id_pemuda', (req, res) => {
+  const id_pemuda = req.params.id_pemuda;
+  const del = `DELETE FROM pemuda WHERE id_pemuda = ${id_pemuda}`;
+  db.query(del, function (err, result) {
+    if (err) throw err;
+    res.redirect('/DataPemuda');
+  });
+});
+
+// DELETE ARTIKEL RENUNGAN
+app.get('/HapusArtikelRenungan/:id_renungan', (req, res) => {
+  const id_renungan = req.params.id_renungan;
+  const del = `DELETE FROM renungan WHERE id_renungan = ${id_renungan}`;
+  db.query(del, function (err, result) {
+    if (err) throw err;
+    res.redirect('/DataRenungan');
+  });
+});
+
+// DELETE INFO IBADAH
+app.get('/HapusDaftarIbadah/:id_ibadah', (req, res) => {
+  const id_ibadah = req.params.id_ibadah;
+  const del = `DELETE FROM infoibadah WHERE id_ibadah = ${id_ibadah}`;
+  db.query(del, function (err, result) {
+    if (err) throw err;
+    res.redirect('/DataInfoIbadah');
   });
 });
 
