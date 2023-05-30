@@ -1,0 +1,9 @@
+.truncated-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.full-text {
+  display: none;
+}
